@@ -236,12 +236,12 @@ const intialState = {
   ],
 };
 
-const contatReducer = (state = intialState, action) => {
+const contactReducer = (state = intialState, action) => {
   switch (action.type) {
     default:
       return state;
   }
 };
-const store = createStore(contatReducer, composeWithDevTools());
+const store = createStore(contactReducer, composeWithDevTools());
 
 export default store;

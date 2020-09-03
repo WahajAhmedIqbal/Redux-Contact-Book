@@ -2,21 +2,28 @@ import React from "react";
 import "./styles/App.scss";
 import NavbarComp from "./components/Navbar";
 import ContactComp from "./components/contacts/Contacts";
-import { provider } from "react-redux";
+import { Provider } from "react-redux";
 import store from "./store";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import AddContactComp from "./components/contacts/AddContact";
 
 function App() {
   return (
-    <provider store={store}>
-      <div className="App">
-        <NavbarComp />
-        <div className="container">
-          <div className="py-1">
-            <ContactComp />
+    <Provider store={store}>
+      <Router>
+        <div className="App">
+          <NavbarComp />
+          <div className="container">
+            <div className="py-1">
+              <Switch>
+                <Route exact path="/" component={ContactComp} />
+                <Route exact path="/contacts/add" component={AddContactComp} />
+              </Switch>
+            </div>
           </div>
         </div>
-      </div>
-    </provider>
+      </Router>
+    </Provider>
   );
 }
 
