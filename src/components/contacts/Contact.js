@@ -1,8 +1,12 @@
 import React from "react";
 import Avatar from "react-avatar";
+import { Link } from "react-router-dom";
+import { deletecontact } from "../../actions/contactAction";
+import { useDispatch } from "react-redux";
 
 function Contact(props) {
-  const { name, phone, email } = props.contact;
+  const dispatch = useDispatch();
+  const { name, phone, email, id } = props.contact;
   return (
     <>
       <tr>
@@ -17,12 +21,17 @@ function Contact(props) {
         <td>{phone}</td>
         <td>{email}</td>
         <td className="actions">
-          <a href="#">
+          <Link to={`/contacts/edit/${id}`}>
             <span className="material-icons "> edit</span>
-          </a>
-          <a href="#">
-            <span className="material-icons text-danger">remove_circle</span>
-          </a>
+          </Link>
+
+          <span
+            className="material-icons text-danger"
+            style={{ cursor: "pointer" }}
+            onClick={() => dispatch(deletecontact(id))}
+          >
+            remove_circle
+          </span>
         </td>
       </tr>
     </>

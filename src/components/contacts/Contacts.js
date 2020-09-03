@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import ContactComp from "./Contact";
 function Contacts() {
-  const contacts = useSelector((state) => state.contacts);
+  const contacts = useSelector((state) => state.contact.contacts);
   //   console.log("e====> ", contacts);
   return (
     <table className="table">
@@ -22,7 +22,7 @@ function Contacts() {
       </thead>
       <tbody>
         {contacts.map((contact) => (
-          <ContactComp contact={contact} />
+          <ContactComp contact={contact} key={contact.id} />
         ))}
       </tbody>
     </table>

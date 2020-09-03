@@ -1,32 +1,42 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addContact } from "../../actions/contactAction";
-import shortid from "shortid";
-import { useHistory } from "react-router-dom";
-function AddContact() {
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getcontact, updatecontact } from "../../actions/contactAction";
+// import shortid from "shortid";
+import { useParams, useHistory } from "react-router-dom";
+
+function EditContacts() {
+  let { id } = useParams();
   const dispatch = useDispatch();
+  const contact = useSelector((state) => state.contact.contact);
   let history = useHistory();
   const [name, setname] = useState("");
   const [phone, setphone] = useState("");
   const [email, setemail] = useState("");
+  useEffect(() => {
+    if (contact != null) {
+      setname(contact.name);
+      setphone(contact.phone);
+      setemail(contact.email);
+    }
+    dispatch(getcontact(id));
+  }, [contact]);
 
-  const createcontect = (e) => {
+  const onupdatecontact = (e) => {
     e.preventDefault();
-    console.log(name, phone);
-    const newcont = {
-      id: shortid.generate(),
+
+    const update_contact = Object.assign(contact, {
       name,
       phone,
       email,
-    };
-    dispatch(addContact(newcont));
+    });
+    dispatch(updatecontact(update_contact));
     history.push("/");
   };
   return (
     <div className="card border-0 shadow">
       <div className="card-header"> Add a Contact</div>
       <div className="card-body">
-        <form onSubmit={(e) => createcontect(e)}>
+        <form onSubmit={(e) => onupdatecontact(e)}>
           <div className="form-group">
             <input
               type="text"
@@ -63,4 +73,4 @@ function AddContact() {
   );
 }
 
-export default AddContact;
+export default EditContacts;
